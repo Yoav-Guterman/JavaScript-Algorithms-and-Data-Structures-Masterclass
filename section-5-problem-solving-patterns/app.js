@@ -2,7 +2,8 @@
 
 (() => {
     // pattern1: frequency counters
-    // pattern2: Multiple Pointers
+    // pattern2: multiple Pointers
+    // pattern3: moving window
 
 
 
@@ -166,32 +167,53 @@
     // another example of countUniqueValues
     // we can use for loop as well!! instead of the while.
     // with j variable running on the whole array
-    function countUniqueValues(array) {
-        if (array.length === 0) return 0
-        if (array.length === 1) return 1
+    // function countUniqueValues(array) {
+    //     if (array.length === 0) return 0
+    //     if (array.length === 1) return 1
 
-        let left = 0
-        let right = 1
-        while (right < array.length) {
-            if (array[left] !== array[right]) {
-                left++;
-                array[left] = array[right]
-                right++;
+    //     let left = 0
+    //     let right = 1
+    //     while (right < array.length) {
+    //         if (array[left] !== array[right]) {
+    //             left++;
+    //             array[left] = array[right]
+    //             right++;
 
-            } else {
-                right++
-            }
+    //         } else {
+    //             right++
+    //         }
+    //     }
+    //     return left + 1
+    // }
+    // // test cases:
+    // // 1 - normal
+    // const array = [1, 1, 1, 1, 2, 3, 4, 4, 5, 5, 6]
+
+    // // 2- without duplication
+    // // const array = [1, 2, 3, 4, 5, 6]
+
+    // // 3- empty
+    // // const array = []
+    // console.log(countUniqueValues(array))
+
+
+    // 3. moving window
+    // example for moving window
+    function maxSubarraySum(arr, num) {
+        let maxSum = 0;
+        let tempSum = 0;
+        if (arr.length < num) return null
+
+        for (let i = 0; i < num; i++) {
+            maxSum += arr[i] 
         }
-        return left + 1
+        tempSum = maxSum
+        for (let j = num; j < arr.length; j++) {
+            tempSum = tempSum - arr[j - num] + arr[j]
+            maxSum = Math.max(tempSum, maxSum)
+        }
+        return maxSum
     }
-    // test cases:
-    // 1 - normal
-    const array = [1, 1, 1, 1, 2, 3, 4, 4, 5, 5, 6]
 
-    // 2- without duplication
-    // const array = [1, 2, 3, 4, 5, 6]
-
-    // 3- empty
-    // const array = []
-    console.log(countUniqueValues(array))
+    console.log(maxSubarraySum([1,2,3,4,5,6,7,6,6,5,4,3,2,4,5,6,7,8,9,6,5,3,4,5,6], 2))
 })()
